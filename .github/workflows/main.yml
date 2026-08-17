@@ -31,7 +31,7 @@ jobs:
             -Dsonar.projectKey=sistemasxp2014-eng_app-vulnerable-sesion4 \
             -Dsonar.organization=sistemasxp2014-eng \
             -Dsonar.sources=.
-        continue-on-error: true # Evita que detenga el pipeline si choca con el análisis automático de Sonar
+        continue-on-error: true
 
   sca:
     runs-on: ubuntu-latest
@@ -48,4 +48,4 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          command: monitor # Envía y registra el proyecto en tu panel web de snyk.io
+          args: --severity-threshold=high
