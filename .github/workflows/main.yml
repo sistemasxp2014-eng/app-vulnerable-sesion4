@@ -31,3 +31,21 @@ jobs:
             -Dsonar.projectKey=sistemasxp2014-eng_app-vulnerable-sesion4 \
             -Dsonar.organization=sistemasxp2014-eng \
             -Dsonar.sources=.
+        continue-on-error: true # Evita que detenga el pipeline si choca con el análisis automático de Sonar
+
+  sca:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          
+      - name: Ejecutar Snyk para escanear dependencias
+        uses: snyk/actions/python@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: monitor # Envía y registra el proyecto en tu panel web de snyk.io
